@@ -1,13 +1,15 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache --virtual python
+COPY package.json yarn.lock ./
 
-COPY package.json package-lock.json ./
-
-RUN npm install --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
-CMD npm run dev
+RUN yarn build
+
+EXPOSE 4000
+
+CMD yarn start
