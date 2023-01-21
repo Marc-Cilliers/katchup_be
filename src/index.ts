@@ -3,8 +3,6 @@ import fastify from 'fastify'
 import pino from 'pino'
 import botRouter from './server/routes/bot.router'
 import { KatchupBot } from './bot'
-import loadConfig from './server/config'
-loadConfig()
 
 const port = process.env.API_PORT || 5000
 
