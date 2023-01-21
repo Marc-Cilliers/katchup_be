@@ -12,6 +12,6 @@ RUN yarn db:gen
 
 RUN yarn build
 
-EXPOSE 4000
+EXPOSE 5000
 
 CMD yarn start
