@@ -4,7 +4,7 @@ import pino from 'pino'
 import botRouter from './server/routes/bot.router'
 import { KatchupBot } from './bot'
 
-const port = process.env.API_PORT || 5000
+const port = 8080
 
 const startServer = async () => {
   try {
@@ -40,7 +40,7 @@ const startServer = async () => {
       }
     }
 
-    await server.listen(port)
+    await server.listen(port, '0.0.0.0')
     KatchupBot.connect()
   } catch (e) {
     console.error(e)
