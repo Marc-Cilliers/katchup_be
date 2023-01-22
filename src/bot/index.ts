@@ -32,12 +32,11 @@ const handleMessage = async (channel, state, msg, self) => {
   passToHandlers({ channel, state, msg, self, timestamp })
 }
 
-const joinChannel = async (channel): Promise<boolean> => {
+const joinChannel = (channel) => {
   try {
-    await client.join(channel)
-    return true
+    client.join(channel)
   } catch (err) {
-    return false
+    console.log('❌ Error joining channel: ', err)
   }
 }
 
@@ -69,7 +68,7 @@ client.on('part', (channel) => {
 
 interface KatchupBot {
   connect: () => void
-  joinChannel: (channel: string) => Promise<boolean>
+  joinChannel: (channel: string) => void
 }
 
 export const KatchupBot: KatchupBot = {

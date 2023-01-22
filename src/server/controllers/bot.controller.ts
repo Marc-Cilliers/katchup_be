@@ -10,14 +10,8 @@ export const joinChannel = async (
   try {
     const channel = request.body['channel']
 
-    const res = await KatchupBot.joinChannel(channel)
-
-    if (res) {
-      reply.status(STANDARD.SUCCESS).send()
-    } else {
-      request.log.info('Join channel request error: ', channel)
-      handleServerError(reply, ERRORS.joinError)
-    }
+    KatchupBot.joinChannel(channel)
+    reply.status(STANDARD.SUCCESS).send()
   } catch (e) {
     handleServerError(reply, e)
   }
