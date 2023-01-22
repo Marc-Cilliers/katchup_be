@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "yarn db:gen && tsc -p tsconfig.json",
     "start": "node build/index.js | pino-pretty --colorize",
     "dev": "ts-node-dev ./src/index.ts | pino-pretty --colorize",
     "postinstall": "npx typesync && husky install",
