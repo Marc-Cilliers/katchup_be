@@ -26,6 +26,7 @@ async function addYoutubeVideo({
   channel,
   msg,
   timestamp,
+  logger,
 }: HandlerArgs) {
   const username = state['display-name']
   const user = await findUserByName(channel)
@@ -47,12 +48,16 @@ async function addYoutubeVideo({
     chatterPromise,
   ])
 
+  logger.info(`Creating new youtube videos: ${youtubeVideos}`)
+
   const videos = await createYoutubeVideos({
     videos: youtubeVideos,
     chatterId: chatter.id,
     timestamp,
     userId: user.id,
   })
+
+  logger.info(`Sending message to: ${user.name}`)
 
   MessengerAPI.sendMessage({
     user: user.name,

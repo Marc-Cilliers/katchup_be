@@ -41,7 +41,7 @@ const startServer = async () => {
     }
 
     await server.listen(port, '0.0.0.0')
-    KatchupBot.connect()
+    KatchupBot.connect(server.log)
   } catch (e) {
     console.error(e)
   }
