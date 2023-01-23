@@ -10,6 +10,7 @@ import { MessengerAPI } from '../../../apis/messenger'
 import { extractLinks } from './utils/extractLinks'
 import { extractIds, LinkWithId } from './utils/extractIds'
 import { isBot } from '../../helpers/'
+import { Console } from '../../../utils'
 
 const YOUTUBE_URL_REGEX =
   /(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/\S*(?:watch|embed)(?:(?:(?=\/[-a-zA-Z0-9_]{11,}(?!\S))\/)|(?:\S*v=|v\/)))([-a-zA-Z0-9_]{11,})/
@@ -26,7 +27,6 @@ async function addYoutubeVideo({
   channel,
   msg,
   timestamp,
-  logger,
 }: HandlerArgs) {
   const username = state['display-name']
   const user = await findUserByName(channel)
@@ -55,7 +55,7 @@ async function addYoutubeVideo({
     userId: user.id,
   })
 
-  logger.info(`Sending message to: ${user.name}`)
+  Console.log('Notifying Katchup user', user.name)
 
   MessengerAPI.sendMessage({
     user: user.name,

@@ -3,6 +3,7 @@ import fastify from 'fastify'
 import pino from 'pino'
 import botRouter from './server/routes/bot.router'
 import { KatchupBot } from './bot'
+import { Console } from './utils'
 
 const port = 8080
 
@@ -29,19 +30,10 @@ const startServer = async () => {
         reply.status(500).send()
       }
     })
-    if (process.env.NODE_ENV === 'production') {
-      for (const signal of ['SIGINT', 'SIGTERM']) {
-        process.on(signal, () =>
-          server.close().then((err) => {
-            console.log(`close application on ${signal}`)
-            process.exit(err ? 1 : 0)
-          }),
-        )
-      }
-    }
 
     await server.listen(port, '0.0.0.0')
-    KatchupBot.connect(server.log)
+    Console.init(server.log)
+    KatchupBot.connect()
   } catch (e) {
     console.error(e)
   }
