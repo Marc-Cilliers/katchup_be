@@ -33,7 +33,7 @@ const handleMessage = async (channel, state, msg, self) => {
   const timestamp = DateTime.utc().toISO()
   channel = channel[0] === '#' ? channel.substring(1) : channel
 
-  logger.info(`Message received from ${channel}: `, msg)
+  logger.info(`Message received from ${channel}: ${msg}`)
   passToHandlers({ channel, state, msg, self, timestamp, logger })
 }
 

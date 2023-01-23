@@ -48,8 +48,6 @@ async function addYoutubeVideo({
     chatterPromise,
   ])
 
-  logger.info(`Creating new youtube videos: ${youtubeVideos}`)
-
   const videos = await createYoutubeVideos({
     videos: youtubeVideos,
     chatterId: chatter.id,
