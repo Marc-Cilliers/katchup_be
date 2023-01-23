@@ -8,7 +8,7 @@ import {
 import { VideoInfo, YoutubeAPI } from '../../../apis'
 import { MessengerAPI } from '../../../apis/messenger'
 import { extractLinks } from './utils/extractLinks'
-import { extractIds } from './utils/extractIds'
+import { extractIds, LinkWithId } from './utils/extractIds'
 
 const YOUTUBE_URL_REGEX =
   /(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/\S*(?:watch|embed)(?:(?:(?=\/[-a-zA-Z0-9_]{11,}(?!\S))\/)|(?:\S*v=|v\/)))([-a-zA-Z0-9_]{11,})/
@@ -27,15 +27,17 @@ async function addYoutubeVideo({
 }: HandlerArgs) {
   const username = state['display-name']
   const user = await findUserByName(channel)
-  const youtubeLinks = extractLinks(msg)
-  const videoIds = extractIds(youtubeLinks)
+  const links = extractLinks(msg)
 
-  const uniqueVideoIds = await removeDuplicateVideoIds(videoIds, user.id)
-  if (!uniqueVideoIds.length) return
-
-  const videoPromises = uniqueVideoIds.map((id, index) =>
-    getVideoInfo(id, youtubeLinks[index]),
+  const youtubeLinks = extractIds(links, true)
+  const uniqueYoutubeLinks = await removeDuplicateYoutubeLinks(
+    youtubeLinks,
+    user.id,
   )
+
+  if (!uniqueYoutubeLinks.length) return
+
+  const videoPromises = uniqueYoutubeLinks.map((link) => getVideoInfo(link))
   const chatterPromise = findOrCreateChatterFrom.username(username)
 
   const [youtubeVideos, chatter] = await Promise.all([
@@ -59,19 +61,25 @@ async function addYoutubeVideo({
 }
 
 const getVideoInfo = async (
-  videoId: string,
-  link: string,
+  link: LinkWithId,
 ): Promise<VideoInfo | { url: string }> => {
-  const videoInfo = await YoutubeAPI.getVideoInfo(videoId)
-  return { ...videoInfo, url: link }
+  const videoInfo = await YoutubeAPI.getVideoInfo(link.videoId)
+  return { ...videoInfo, url: link.url }
 }
 
-const removeDuplicateVideoIds = async (videoIds, userId) => {
+const removeDuplicateYoutubeLinks = async (
+  youtubeLinks: LinkWithId[],
+  userId: string,
+) => {
   const existingVideos = await prisma.youtubeVideo.findMany({
-    where: { videoId: { in: videoIds }, archived: null, userId },
+    where: {
+      videoId: { in: youtubeLinks.map((l) => l.videoId) },
+      archived: null,
+      userId,
+    },
   })
 
   const existingVideoIds = existingVideos.map((v) => v.videoId)
 
-  return videoIds.filter((id) => !existingVideoIds.includes(id))
+  return youtubeLinks.filter((link) => !existingVideoIds.includes(link.videoId))
 }
