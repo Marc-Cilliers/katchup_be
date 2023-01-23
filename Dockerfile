@@ -10,8 +10,6 @@ COPY . .
 
 RUN yarn db:gen
 
-RUN yarn db:push
-
 RUN yarn build
 
 EXPOSE 8080
