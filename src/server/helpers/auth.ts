@@ -15,9 +15,7 @@ export const checkValidRequest = (
     const matches = decodedToken === process.env.SECRET_TOKEN
     if (matches) done()
     else {
-      request.log.info(
-        `Bad token (${decodedToken}) received from ${request.hostname}`,
-      )
+      request.log.info(`Bad token (${decodedToken})`)
       return reply.code(ERROR400.statusCode).send(ERROR400)
     }
   } catch (e) {
