@@ -3,6 +3,7 @@ import axios from 'axios'
 export interface VideoInfo {
   title: string
   channel: string
+  channelId: string
   thumbnail: string
   duration: string
   videoId: string
@@ -21,10 +22,10 @@ export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
 
   const title = info.snippet.title
   const channel = info.snippet.channelTitle
+  const channelId = info.snippet.channelId
   const thumbnail = info.snippet.thumbnails.default.url
   const duration = info.contentDetails.duration
-
-  return { title, duration, channel, thumbnail, videoId }
+  return { title, duration, channel, channelId, thumbnail, videoId }
 }
 
 export const YoutubeAPI: YoutubeAPI = {

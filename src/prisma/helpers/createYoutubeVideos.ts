@@ -38,6 +38,7 @@ export const createYoutubeVideos = async ({
       title: v.title,
       duration: v.duration,
       channel: v.channel,
+      channelId: v.channelId,
       thumbnail: v.thumbnail,
       videoId: v.videoId,
     }
