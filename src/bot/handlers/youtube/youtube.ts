@@ -9,11 +9,13 @@ import { VideoInfo, YoutubeAPI } from '../../../apis'
 import { MessengerAPI } from '../../../apis/messenger'
 import { extractLinks } from './utils/extractLinks'
 import { extractIds, LinkWithId } from './utils/extractIds'
+import { isBot } from '../../helpers/'
 
 const YOUTUBE_URL_REGEX =
   /(?:https?:\/\/)?(?:www\.)?youtu(?:\.be\/|be.com\/\S*(?:watch|embed)(?:(?:(?=\/[-a-zA-Z0-9_]{11,}(?!\S))\/)|(?:\S*v=|v\/)))([-a-zA-Z0-9_]{11,})/
 
 export const youtube = async (args: HandlerArgs) => {
+  if (isBot(args)) return
   if (!YOUTUBE_URL_REGEX.test(args.msg)) return
 
   addYoutubeVideo(args)

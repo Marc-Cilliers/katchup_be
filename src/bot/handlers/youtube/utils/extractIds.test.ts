@@ -18,44 +18,44 @@ const LINKS = [
 describe('extractIds', () => {
   test('correctly returns all ids from all youtube links', () => {
     const ids = [
-      { videoId: 'iwGFalTRHDA', link: 'youtu.be/iwGFalTRHDA' },
-      { videoId: 'iwGFalTRHDA', link: 'youtube.com/watch?v=iwGFalTRHDA' },
-      { videoId: 'iwGFalTRHDA', link: 'www.youtube.com/watch?v=iwGFalTRHDA' },
+      { videoId: 'iwGFalTRHDA', url: 'youtu.be/iwGFalTRHDA' },
+      { videoId: 'iwGFalTRHDA', url: 'youtube.com/watch?v=iwGFalTRHDA' },
+      { videoId: 'iwGFalTRHDA', url: 'www.youtube.com/watch?v=iwGFalTRHDA' },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'http://www.youtube.com/watch?v=iwGFalTRHDA',
+        url: 'http://www.youtube.com/watch?v=iwGFalTRHDA',
       },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'https://www.youtube.com/watch?v=iwGFalTRHDA',
+        url: 'https://www.youtube.com/watch?v=iwGFalTRHDA',
       },
       {
         videoId: 'MoBL33GT9S8',
-        link: 'https://www.youtube.com/watch?v=MoBL33GT9S8&feature=share',
+        url: 'https://www.youtube.com/watch?v=MoBL33GT9S8&feature=share',
       },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'https://www.youtube.com/embed/watch?feature=player_embedded&v=iwGFalTRHDA',
+        url: 'https://www.youtube.com/embed/watch?feature=player_embedded&v=iwGFalTRHDA',
       },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'https://www.youtube.com/embed/watch?v=iwGFalTRHDA',
+        url: 'https://www.youtube.com/embed/watch?v=iwGFalTRHDA',
       },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'https://www.youtube.com/embed/v=iwGFalTRHDA',
+        url: 'https://www.youtube.com/embed/v=iwGFalTRHDA',
       },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'https://www.youtube.com/watch/iwGFalTRHDA',
+        url: 'https://www.youtube.com/watch/iwGFalTRHDA',
       },
       {
         videoId: 'aGmiw_rrNxk',
-        link: 'http://www.youtube.com/attribution_link?u=/watch?v=aGmiw_rrNxk&feature=share',
+        url: 'http://www.youtube.com/attribution_link?u=/watch?v=aGmiw_rrNxk&feature=share',
       },
       {
         videoId: 'iwGFalTRHDA',
-        link: 'https://m.youtube.com/watch?v=iwGFalTRHDA',
+        url: 'https://m.youtube.com/watch?v=iwGFalTRHDA',
       },
     ]
 
@@ -64,14 +64,14 @@ describe('extractIds', () => {
 
   test('unique works correctly', () => {
     const ids = [
-      { videoId: 'iwGFalTRHDA', link: 'youtu.be/iwGFalTRHDA' },
+      { videoId: 'iwGFalTRHDA', url: 'youtu.be/iwGFalTRHDA' },
       {
         videoId: 'MoBL33GT9S8',
-        link: 'https://www.youtube.com/watch?v=MoBL33GT9S8&feature=share',
+        url: 'https://www.youtube.com/watch?v=MoBL33GT9S8&feature=share',
       },
       {
         videoId: 'aGmiw_rrNxk',
-        link: 'http://www.youtube.com/attribution_link?u=/watch?v=aGmiw_rrNxk&feature=share',
+        url: 'http://www.youtube.com/attribution_link?u=/watch?v=aGmiw_rrNxk&feature=share',
       },
     ]
 

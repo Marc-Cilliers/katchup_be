@@ -12,6 +12,7 @@ export const extractIds = (links: string[], unique = false): LinkWithId[] => {
   for (const link of links) {
     const matches = link.match(YOUTUBE_URL_REGEX)
     const videoId = matches ? matches[1] : undefined
+
     if (!videoId) continue
     if (unique && uniqueLinks.find((l) => l.videoId === videoId)) continue
 
