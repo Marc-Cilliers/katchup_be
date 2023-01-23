@@ -19,6 +19,7 @@ type PartialYoutubeVideo = {
   duration: string
   channel: string
   thumbnail: string
+  videoId: string
 }
 
 export const createYoutubeVideos = async ({
@@ -38,6 +39,7 @@ export const createYoutubeVideos = async ({
       duration: v.duration,
       channel: v.channel,
       thumbnail: v.thumbnail,
+      videoId: v.videoId,
     }
   })
 

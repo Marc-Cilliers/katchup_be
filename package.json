@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "test": "TZ=\"Etc/UTC\" jest",
     "start": "node build/index.js | pino-pretty --colorize",
     "dev": "ts-node-dev ./src/index.ts | pino-pretty --colorize",
     "postinstall": "npx typesync && husky install",
@@ -58,6 +59,7 @@
     "tmi.js": "^1.8.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@prisma/cli": "2.14.0",
     "@types/eslint": "8.4.1",
     "@types/eslint-plugin-prettier": "3.1.0",
@@ -86,6 +88,7 @@
     "prettier": "2.6.2",
     "prisma": "^4.9.0",
     "tap": "16.0.1",
+    "ts-jest": "^29.0.5",
     "ts-node": "10.7.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "4.6.3"

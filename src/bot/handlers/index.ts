@@ -1,5 +1,5 @@
 import { HandlerArgs } from '../types'
-import youtube from './youtube'
+import { youtube } from './youtube'
 
 const HANDLERS = [youtube]
 

@@ -5,7 +5,8 @@ export interface VideoInfo {
   channel: string
   thumbnail: string
   duration: string
-  url?: string;
+  videoId: string
+  url?: string
 }
 
 interface YoutubeAPI {
@@ -23,7 +24,7 @@ export const getVideoInfo = async (videoId: string): Promise<VideoInfo> => {
   const thumbnail = info.snippet.thumbnails.default.url
   const duration = info.contentDetails.duration
 
-  return { title, duration, channel, thumbnail }
+  return { title, duration, channel, thumbnail, videoId }
 }
 
 export const YoutubeAPI: YoutubeAPI = {

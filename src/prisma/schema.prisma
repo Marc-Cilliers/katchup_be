@@ -74,13 +74,14 @@ model YoutubeVideo {
   timestamp       DateTime
   archived        DateTime?  
   url             String
+  videoId         String
   title           String?
   duration        String?
   channel         String?
   thumbnail       String?
   chatter         Chatter   @relation(fields: [chatterId], references: [id])
   chatterId       String
-  user            User  @relation(fields: [userId], references: [id])
+  user            User      @relation(fields: [userId], references: [id])
   userId          String
 }
 
