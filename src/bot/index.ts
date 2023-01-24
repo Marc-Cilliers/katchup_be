@@ -22,8 +22,6 @@ const connectToUsers = async () => {
 
   for (const user of users) {
     client.join(user.name)
-    Console.log('Channel joined', user.name)
-
     MessengerAPI.createChannel({ user: user.name, pipe: 'youtube' })
   }
 }
@@ -32,7 +30,6 @@ const handleMessage = async (channel, state, msg, self) => {
   const timestamp = DateTime.utc().toISO()
   channel = channel[0] === '#' ? channel.substring(1) : channel
 
-  Console.log('Message received from ', channel, msg)
   passToHandlers({ channel, state, msg, self, timestamp })
 }
 
@@ -56,19 +53,37 @@ const connect = () => {
   }, 2500)
 }
 
-client.on('message', (channel, state, msg, self) =>
-  handleMessage(channel, state, msg, self),
-)
+client.on('message', async (channel, state, msg, self) => {
+  Console.log('Message received', { channel, state, msg, self })
+  handleMessage(channel, state, msg, self)
+})
 
-client.on('connected', () => {
+client.on('serverchange', async (channel) => {
+  Console.log('Twitch server change has occured', { channel })
+})
+
+client.on('disconnected', async (reason) => {
+  Console.log('Twitch client disconnected', { reason })
+})
+
+client.on('action', async (channel, state, msg, self) => {
+  Console.log('Twitch action occured', { channel, state, msg, self })
+})
+
+client.on('connected', async (address, port) => {
   reattemptConnect = false
 
+  Console.log('Twitch client connected', { address, port })
   connectToUsers()
 })
 
-client.on('part', (channel) => {
-  void client.join(channel)
-  Console.log('Channel parted, rejoined', channel)
+client.on('part', async (channel) => {
+  await client.join(channel)
+  Console.log('Channel parted attempting to rejoin...')
+})
+
+client.on('join', async (channel, username, self) => {
+  Console.log('Channel joined', { channel, username, self })
 })
 
 interface KatchupBot {
