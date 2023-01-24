@@ -1,7 +1,7 @@
 import { HandlerArgs } from 'bot/types'
 import { Console } from '../../utils'
 
-const KNOWN_BOTS = ['streamelements', 'nightbot']
+const KNOWN_BOTS = ['streamelements', 'nightbot', 'fossabot']
 
 export type IsBotArgs = Pick<HandlerArgs, 'state'>
 
