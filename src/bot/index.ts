@@ -54,36 +54,38 @@ const connect = () => {
 }
 
 client.on('message', async (channel, state, msg, self) => {
-  Console.log('Message received', { channel, state, msg, self })
+  Console.log('✉️ Message received', { channel, state, msg, self })
   handleMessage(channel, state, msg, self)
 })
 
 client.on('serverchange', async (channel) => {
-  Console.log('Twitch server change has occured', { channel })
+  Console.log('🖥 Twitch server change has occured', { channel })
 })
 
 client.on('disconnected', async (reason) => {
-  Console.log('Twitch client disconnected', { reason })
+  Console.log('❌ Twitch client disconnected', { reason })
 })
 
 client.on('action', async (channel, state, msg, self) => {
-  Console.log('Twitch action occured', { channel, state, msg, self })
+  Console.log('⚡️ Twitch action occured', { channel, state, msg, self })
 })
 
 client.on('connected', async (address, port) => {
   reattemptConnect = false
 
-  Console.log('Twitch client connected', { address, port })
+  Console.log('🔗 Twitch client connected', { address, port })
   connectToUsers()
 })
 
 client.on('part', async (channel) => {
+  Console.log('⎋ Channel parted attempting to rejoin...', { channel })
   await client.join(channel)
-  Console.log('Channel parted attempting to rejoin...')
 })
 
 client.on('join', async (channel, username, self) => {
-  Console.log('Channel joined', { channel, username, self })
+  if (!self) return
+
+  Console.log('✅ Channel joined', { channel, username, self })
 })
 
 interface KatchupBot {
