@@ -6,7 +6,7 @@ describe('extractLinks', () => {
     const links = [
       'https://twitch.tv/random_channel', //Twitch
       'https://youtube.com/watch?v=cyCjGiRyW4g', //Youtube
-      'https://youtube.com/shorts/ktIaFr5OQGg',
+      'https://youtube.com/shorts/ktIaFr5OQGg', //Youtube Short
     ]
 
     const startOfMsg = faker.random.words(50)

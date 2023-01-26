@@ -38,7 +38,10 @@ async function addYoutubeVideo({
     user.id,
   )
 
-  if (!uniqueYoutubeLinks.length) return
+  if (!uniqueYoutubeLinks.length) {
+    Console.log('No unique youtube links found, returning...')
+    return
+  }
 
   const videoPromises = uniqueYoutubeLinks.map((link) => getVideoInfo(link))
   const chatterPromise = findOrCreateChatterFrom.username(username)
@@ -69,7 +72,9 @@ const getVideoInfo = async (
   link: LinkWithId,
 ): Promise<VideoInfo | { url: string }> => {
   const videoInfo = await YoutubeAPI.getVideoInfo(link.videoId)
-  return { ...videoInfo, url: link.url }
+  if (videoInfo) return { ...videoInfo, url: link.url }
+
+  return { url: link.url }
 }
 
 const removeDuplicateYoutubeLinks = async (
