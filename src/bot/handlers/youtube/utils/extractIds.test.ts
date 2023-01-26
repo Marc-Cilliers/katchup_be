@@ -13,6 +13,7 @@ const LINKS = [
   'https://www.youtube.com/watch/iwGFalTRHDA',
   'http://www.youtube.com/attribution_link?u=/watch?v=aGmiw_rrNxk&feature=share',
   'https://m.youtube.com/watch?v=iwGFalTRHDA',
+  'https://www.youtube.com/shorts/ktIaFr5OQGg',
 ]
 
 describe('extractIds', () => {
@@ -56,6 +57,10 @@ describe('extractIds', () => {
       {
         videoId: 'iwGFalTRHDA',
         url: 'https://m.youtube.com/watch?v=iwGFalTRHDA',
+      },
+      {
+        videoId: 'ktIaFr5OQGg',
+        url: 'https://www.youtube.com/shorts/ktIaFr5OQGg',
       },
     ]
 
