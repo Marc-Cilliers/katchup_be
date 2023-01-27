@@ -36,6 +36,7 @@ const handleMessage = async (channel, state, msg, self) => {
 const joinChannel = (channel) => {
   try {
     client.join(channel)
+    MessengerAPI.createChannel({ user: channel, pipe: 'youtube' })
   } catch (err) {
     console.log('❌ Error joining channel: ', err)
   }
