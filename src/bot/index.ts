@@ -3,8 +3,9 @@ import tmi from 'tmi.js'
 import { passToHandlers } from './handlers'
 import { prisma } from '../prisma/client'
 import { DateTime } from 'luxon'
-import { MessengerAPI } from '../apis'
+import { MessengerAPI, TwitchAPI } from '../apis'
 import { Console } from '../utils'
+import { updateUserBadges } from '../prisma/helpers'
 
 let reattemptConnect = false
 
@@ -38,7 +39,7 @@ const joinChannel = (channel) => {
     client.join(channel)
     MessengerAPI.createChannel({ user: channel, pipe: 'youtube' })
   } catch (err) {
-    console.log('❌ Error joining channel: ', err)
+    Console.error('❌ Error joining channel: ', err)
   }
 }
 
@@ -86,8 +87,13 @@ client.on('part', async (channel) => {
 
 client.on('join', async (channel, username, self) => {
   if (!self) return
+  channel = channel[0] === '#' ? channel.substring(1) : channel
 
   Console.log('✅ Channel joined', { channel, username, self })
+
+  const badges = await TwitchAPI.getSubscriberBadgesFromUsername(channel)
+  await updateUserBadges({ badges, username: channel })
+  Console.log('🚀 Channel badges fetched!', { channel })
 })
 
 interface KatchupBot {
