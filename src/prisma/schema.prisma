@@ -97,7 +97,7 @@ model UserChatter {
   userId          String
   chatterRatings   ChatterRating[]
   youtubeVideos     YoutubeVideo[]
-  badges          String[]       @default([])
+  badges          Json          @default("[]")
   color           String
   mod             Boolean        @default(false)
   subscriber      Boolean        @default(false)
