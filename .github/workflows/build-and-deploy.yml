@@ -48,12 +48,14 @@ jobs:
           CHATBOT_TOKEN: ${{ secrets.CHATBOT_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
         with:
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           username: ${{ secrets.SSH_USERNAME }}
-          envs: IMAGE_NAME,REGISTRY,DIGITALOCEAN_TOKEN,GITHUB_SHA,DATABASE_URL,SECRET_TOKEN,GOOGLE_KEY,CHATBOT_TOKEN,SUPABASE_URL,SUPABASE_ANON_KEY
+          envs: IMAGE_NAME,REGISTRY,DIGITALOCEAN_TOKEN,GITHUB_SHA,DATABASE_URL,SECRET_TOKEN,GOOGLE_KEY,CHATBOT_TOKEN,SUPABASE_URL,SUPABASE_ANON_KEY,TWITCH_CLIENT_ID,TWITCH_CLIENT_SECRET
           script: |
             # Login to registry
             docker login -u $(echo $DIGITALOCEAN_TOKEN) -p $(echo $DIGITALOCEAN_TOKEN) registry.digitalocean.com
@@ -69,6 +71,8 @@ jobs:
             -e CHATBOT_TOKEN=$(echo $CHATBOT_TOKEN) \
             -e SUPABASE_URL=$(echo $SUPABASE_URL) \
             -e SUPABASE_ANON_KEY=$(echo $SUPABASE_ANON_KEY) \
+            -e TWITCH_CLIENT_ID=$(echo $TWITCH_CLIENT_ID) \
+            -e TWITCH_CLIENT_SECRET=$(echo $TWITCH_CLIENT_SECRET) \
             -p 8080:8080 \
             --restart always \
             --name $(echo $IMAGE_NAME) \
