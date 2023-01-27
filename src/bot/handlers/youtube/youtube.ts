@@ -2,7 +2,7 @@ import { prisma } from '../../../prisma/client'
 import { HandlerArgs } from '../../types'
 import {
   createYoutubeVideos,
-  findOrCreateChatterFrom,
+  getChatterAndUpdate,
   findUserByName,
 } from '../../../prisma/helpers'
 import { VideoInfo, YoutubeAPI } from '../../../apis'
@@ -25,7 +25,6 @@ async function addYoutubeVideo({
   msg,
   timestamp,
 }: HandlerArgs) {
-  const username = state['display-name']
   const user = await findUserByName(channel)
   const links = extractLinks(msg)
 
@@ -41,18 +40,17 @@ async function addYoutubeVideo({
   }
 
   const videoPromises = uniqueYoutubeLinks.map((link) => getVideoInfo(link))
-  const chatterPromise = findOrCreateChatterFrom.username(username)
+  const chatterPromise = getChatterAndUpdate(state, user.id)
 
-  const [youtubeVideos, chatter] = await Promise.all([
+  const [youtubeVideos, userChatter] = await Promise.all([
     Promise.all(videoPromises),
     chatterPromise,
   ])
 
   const videos = await createYoutubeVideos({
     videos: youtubeVideos,
-    chatterId: chatter.id,
+    userChatterId: userChatter.id,
     timestamp,
-    userId: user.id,
   })
 
   Console.log('Notifying Katchup user', user.name)
@@ -61,7 +59,7 @@ async function addYoutubeVideo({
     user: user.name,
     pipe: 'youtube',
     event: 'newVideo',
-    payload: { videos, timestamp, chatter },
+    payload: { videos, timestamp, userChatter },
   })
 }
 
@@ -82,7 +80,9 @@ const removeDuplicateYoutubeLinks = async (
     where: {
       videoId: { in: youtubeLinks.map((l) => l.videoId) },
       archived: null,
-      userId,
+      userChatter: {
+        userId,
+      },
     },
   })
 

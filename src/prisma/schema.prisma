@@ -13,8 +13,7 @@ datasource db {
 model Chatter {
   id              String     @default(cuid()) @id
   username        String
-  youtubeVideos   YoutubeVideo[]
-  ratings         ChatterRating[]
+  channels        UserChatter[]
 }
 
 
@@ -53,8 +52,7 @@ model User {
   image           String
   email           String?   @unique
   emailVerified   DateTime?
-  youtubeVideos   YoutubeVideo[]
-  chatterRatings  ChatterRating[]
+  chatters        UserChatter[]
 
   accounts        Account[]
   sessions        Session[]
@@ -80,17 +78,28 @@ model YoutubeVideo {
   channel         String?
   channelId       String?
   thumbnail       String?
+  userChatter         UserChatter   @relation(fields: [userChatterId], references: [id])
+  userChatterId       String
+}
+
+model ChatterRating {
+  id              String        @default(cuid()) @id
+  userChatter     UserChatter   @relation(fields: [userChatterId], references: [id])
+  userChatterId       String
+  rating          Int           @default(0)
+}
+
+model UserChatter {
+  id              String    @default(cuid()) @id
   chatter         Chatter   @relation(fields: [chatterId], references: [id])
   chatterId       String
   user            User      @relation(fields: [userId], references: [id])
   userId          String
-}
-
-model ChatterRating {
-  id              String    @default(cuid()) @id
-  chatter         Chatter   @relation(fields: [chatterId], references: [id])
-  chatterId       String
-  user            User  @relation(fields: [userId], references: [id])
-  userId          String
-  rating          Int       @default(0)
+  chatterRatings   ChatterRating[]
+  youtubeVideos     YoutubeVideo[]
+  badges          String[]       @default([])
+  color           String
+  mod             Boolean        @default(false)
+  subscriber      Boolean        @default(false)
+  turbo           Boolean        @default(false)
 }

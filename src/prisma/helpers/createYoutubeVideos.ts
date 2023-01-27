@@ -4,16 +4,14 @@ import { v4 as uuid4 } from 'uuid'
 
 interface CreateYoutubeVideosProps {
   videos: Partial<YoutubeVideo>[]
-  chatterId: string
+  userChatterId: string
   timestamp: string
-  userId: string
 }
 
 type PartialYoutubeVideo = {
   id: string
-  chatterId: string
+  userChatterId: string
   timestamp: string
-  userId: string
   url: string
   title: string
   duration: string
@@ -24,16 +22,14 @@ type PartialYoutubeVideo = {
 
 export const createYoutubeVideos = async ({
   videos,
-  chatterId,
+  userChatterId,
   timestamp,
-  userId,
 }: CreateYoutubeVideosProps): Promise<PartialYoutubeVideo[]> => {
   const youtubeVideos: PartialYoutubeVideo[] = videos.map((v) => {
     return {
       id: uuid4(),
-      chatterId,
+      userChatterId,
       timestamp,
-      userId,
       url: v.url,
       title: v.title,
       duration: v.duration,
