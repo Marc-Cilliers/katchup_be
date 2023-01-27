@@ -28,16 +28,40 @@ const updateUserChatter = async (
   const { color, mod, subscriber, turbo } = state
   const badges = Object.keys(state['badges'])
 
-  return await prisma.userChatter.upsert({
-    where: { id: existingUserChatter.id },
-    update: {
-      badges,
-      color,
-      mod,
-      subscriber,
-      turbo,
-    },
-    create: {
+  if (existingUserChatter) {
+    return await prisma.userChatter.update({
+      where: { id: existingUserChatter.id },
+      data: {
+        badges,
+        color,
+        mod,
+        subscriber,
+        turbo,
+      },
+      select: {
+        id: true,
+        badges: true,
+        chatterId: true,
+        color: true,
+        mod: true,
+        subscriber: true,
+        turbo: true,
+        chatterRatings: {
+          select: {
+            rating: true,
+          },
+        },
+        chatter: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    })
+  }
+
+  return await prisma.userChatter.create({
+    data: {
       badges,
       color,
       mod,
@@ -45,6 +69,25 @@ const updateUserChatter = async (
       turbo,
       chatterId,
       userId,
+    },
+    select: {
+      id: true,
+      badges: true,
+      chatterId: true,
+      color: true,
+      mod: true,
+      subscriber: true,
+      turbo: true,
+      chatterRatings: {
+        select: {
+          rating: true,
+        },
+      },
+      chatter: {
+        select: {
+          username: true,
+        },
+      },
     },
   })
 }

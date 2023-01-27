@@ -31,9 +31,10 @@ const startServer = async () => {
       }
     })
 
-    await server.listen(port, '0.0.0.0')
     Console.init(server.log)
     KatchupBot.connect()
+
+    await server.listen(port, '0.0.0.0')
   } catch (e) {
     console.error(e)
   }

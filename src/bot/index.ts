@@ -64,6 +64,7 @@ client.on('serverchange', async (channel) => {
 
 client.on('disconnected', async (reason) => {
   Console.log('❌ Twitch client disconnected', { reason })
+  client.connect()
 })
 
 client.on('action', async (channel, state, msg, self) => {
