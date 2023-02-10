@@ -1,4 +1,4 @@
-import { HandlerArgs } from 'bot/types'
+import { HandlerArgs } from '../types'
 
 const KNOWN_BOTS = ['streamelements', 'nightbot', 'fossabot']
 

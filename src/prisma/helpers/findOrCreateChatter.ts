@@ -25,7 +25,8 @@ const updateUserChatter = async (
   const existingUserChatter = await prisma.userChatter.findFirst({
     where: { chatterId, userId },
   })
-  const { color, mod, subscriber, turbo, badges } = state
+  const { color, mod, subscriber, turbo, badges: badgesObj } = state
+  const badges = Object.keys(badgesObj).map((k) => ({ [k]: badgesObj[k] }))
 
   if (existingUserChatter) {
     return await prisma.userChatter.update({
