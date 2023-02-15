@@ -1,4 +1,5 @@
 export * from './createYoutubeVideos'
+export * from './createTwitchClips'
 export * from './findUserByName'
 export * from './findOrCreateChatter'
 export * from './updateUserBadges'

@@ -7,8 +7,8 @@ import {
 } from '../../../prisma/helpers'
 import { VideoInfo, YoutubeAPI } from '../../../apis'
 import { MessengerAPI } from '../../../apis/messenger'
-import { extractLinks } from './utils/extractLinks'
-import { extractIds, LinkWithId, YOUTUBE_URL_REGEX } from './utils/extractIds'
+import { extractLinks } from '../utils/extractLinks'
+import { extractIds, LinkWithId, YOUTUBE_URL_REGEX } from '../utils/extractIds'
 import { isBot } from '../../helpers/'
 import { Console } from '../../../utils'
 

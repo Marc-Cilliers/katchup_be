@@ -1,4 +1,4 @@
-import { getUrls } from '../../../../utils/getUrls'
+import { getUrls } from '../../../utils/getUrls'
 
 export const extractLinks = (msg: string): string[] => {
   const urls = getUrls(msg)

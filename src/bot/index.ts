@@ -24,6 +24,7 @@ const connectToUsers = async () => {
   for (const user of users) {
     client.join(user.name)
     MessengerAPI.createChannel({ user: user.name, pipe: 'youtube' })
+    MessengerAPI.createChannel({ user: user.name, pipe: 'twitch' })
   }
 }
 
@@ -38,6 +39,7 @@ const joinChannel = (channel) => {
   try {
     client.join(channel)
     MessengerAPI.createChannel({ user: channel, pipe: 'youtube' })
+    MessengerAPI.createChannel({ user: channel, pipe: 'twitch' })
   } catch (err) {
     Console.error('❌ Error joining channel: ', err)
   }

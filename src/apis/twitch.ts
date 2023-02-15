@@ -142,9 +142,39 @@ const getSubscriberBadgesFromUsername = async (
   return subBadges
 }
 
+export interface ClipInfo {
+  id: string
+  url: string
+  embed_url: string
+  broadcaster_id: string
+  broadcaster_name: string
+  creator_id: string
+  creator_name: string
+  video_id: string
+  game_id: string
+  language: string
+  title: string
+  view_count: number
+  created_at: string
+  thumbnail_url: string
+  duration: number
+  vod_offset: number
+}
+
+const getClipInfo = async (clipId: string): Promise<ClipInfo> => {
+  const headers = await getHeaders()
+  const res = await axios.get(
+    `https://api.twitch.tv/helix/clips?id=${clipId}`,
+    { headers },
+  )
+
+  return res.data.data[0]
+}
+
 export const TwitchAPI = {
   getUserInfo: wrap(getUserInfo),
   getChannelInfo: wrap(getChannelInfo),
   getSubscriberBadges: wrap(getSubscriberBadges),
   getSubscriberBadgesFromUsername: wrap(getSubscriberBadgesFromUsername),
+  getClipInfo: wrap(getClipInfo),
 }

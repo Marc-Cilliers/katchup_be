@@ -4,10 +4,11 @@ import {
   RealtimeChannelSendResponse,
 } from '@supabase/supabase-js'
 
-type Pipe = 'youtube'
+type Pipe = 'youtube' | 'twitch'
 type YoutubeEvent = 'newVideo'
+type TwitchEvent = 'newClip'
 
-type Event = YoutubeEvent
+type Event = YoutubeEvent | TwitchEvent
 
 interface ChannelProps {
   user: string

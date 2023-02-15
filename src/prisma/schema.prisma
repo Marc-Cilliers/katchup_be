@@ -84,6 +84,28 @@ model YoutubeVideo {
   userChatterId       String
 }
 
+model TwitchClip {
+  id                  String     @default(cuid()) @id
+  clipId              String
+  url                 String
+  broadcasterId       String
+  broadcasterName     String
+  creatorId           String
+  creatorName         String  
+  gameId              String
+  language            String
+  title               String
+  viewCount           Int
+  createdAt           String
+  duration            Float
+  thumbnail           String
+  
+  timestamp           DateTime
+  archived            DateTime?
+  userChatter         UserChatter   @relation(fields: [userChatterId], references: [id])
+  userChatterId       String
+}
+
 model ChatterRating {
   id              String        @default(cuid()) @id
   userChatter     UserChatter   @relation(fields: [userChatterId], references: [id])
@@ -97,8 +119,9 @@ model UserChatter {
   chatterId       String
   user            User      @relation(fields: [userId], references: [id])
   userId          String
-  chatterRatings   ChatterRating[]
+  chatterRatings    ChatterRating[]
   youtubeVideos     YoutubeVideo[]
+  twitchClips       TwitchClip[]
   badges          Json[]         @default([])
   color           String
   mod             Boolean        @default(false)
